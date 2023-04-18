@@ -2,17 +2,15 @@
     <div class="todo-app">
         <h1 class="title">Vue 3 To-Do App</h1>
         <div class="add-todo">
-            <input type="text" v-model="newTodo" placeholder="Add a new to-do" />
+            <input type="text" v-model="newTodo" placeholder="Add a new to-do" @keydown.enter="addTodo" />
             <button @click="addTodo">Add</button>
         </div>
         <ul class="todo-list">
             <li v-for="todo in todos" :key="todo.id" class="todo-item">
-                <input type="checkbox" v-model = "todo.completed"/>
+                <input type="checkbox" v-model = "todo.completed" />
                 <span class="todo-title">{{ todo.title }}</span>
                 <button @click="deleteTodo(todo.id)">Delete</button>
                 <button @click="completeTodo(todo.id)">Complete</button>
-
-
             </li>
         </ul>
         <div class="todo-count">
