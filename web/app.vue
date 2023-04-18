@@ -7,8 +7,11 @@
         </div>
         <ul class="todo-list">
             <li v-for="todo in todos" :key="todo.id" class="todo-item">
+                <input type="checkbox" v-model = "isChecked"/>
                 <span class="todo-title">{{ todo.title }}</span>
                 <button @click="deleteTodo(todo.id)">Delete</button>
+                <button @click="completeTodo()">Complete</button>
+
             </li>
         </ul>
         <div class="todo-count">
@@ -30,6 +33,7 @@ export default defineComponent({
     setup() {
         const newTodo = ref('');
         const todos = ref<Todo[]>([]);
+        const todosCompleted = 0;
 
         const addTodo = () => {
             if (newTodo.value.trim() === '') {
@@ -52,9 +56,14 @@ export default defineComponent({
             }
         };
 
+        const completeTodo = () => {
+        };
+
         const getCompletedTodos = computed(() => {
             return todos.value.filter((todo) => todo.completed).length;
         });
+
+
 
         const getTotalTodos = computed(() => {
             return todos.value.length;
@@ -65,6 +74,8 @@ export default defineComponent({
             todos,
             addTodo,
             deleteTodo,
+            completeTodo,
+            todosCompleted,
             getCompletedTodos,
             getTotalTodos,
         };
