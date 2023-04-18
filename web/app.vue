@@ -7,10 +7,11 @@
         </div>
         <ul class="todo-list">
             <li v-for="todo in todos" :key="todo.id" class="todo-item">
-                <input type="checkbox" v-model = "isChecked"/>
+                <input type="checkbox" v-model = "todo.completed"/>
                 <span class="todo-title">{{ todo.title }}</span>
                 <button @click="deleteTodo(todo.id)">Delete</button>
-                <button @click="completeTodo()">Complete</button>
+                <button @click="completeTodo(todo.id)">Complete</button>
+
 
             </li>
         </ul>
@@ -33,7 +34,9 @@ export default defineComponent({
     setup() {
         const newTodo = ref('');
         const todos = ref<Todo[]>([]);
-        const todosCompleted = 0;
+        const todosCompleted = reactive({
+            count: 0
+        });
 
         const addTodo = () => {
             if (newTodo.value.trim() === '') {
@@ -56,14 +59,15 @@ export default defineComponent({
             }
         };
 
-        const completeTodo = () => {
+        const completeTodo = (id:number) => {
+            const index = todos.value.findIndex((todo) => todo.id === id);
+            todos.value[index].completed = true;
+            todosCompleted.count++
         };
 
         const getCompletedTodos = computed(() => {
             return todos.value.filter((todo) => todo.completed).length;
         });
-
-
 
         const getTotalTodos = computed(() => {
             return todos.value.length;
@@ -75,6 +79,7 @@ export default defineComponent({
             addTodo,
             deleteTodo,
             completeTodo,
+            count: todosCompleted.count,
             todosCompleted,
             getCompletedTodos,
             getTotalTodos,
