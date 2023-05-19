@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" 
+    directory: "/web" 
+    target-branch: main
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "America/Santo_Domingo"
+    commit-message:
+      prefix: "npm"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: main
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "actions"
+    open-pull-requests-limit: 5
