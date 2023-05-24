@@ -1,142 +1,147 @@
 <template>
-    <div class="add-todo">
-
-        <input type="text" v-model="newTodo" placeholder="Add a new to-do" @keydown.enter="addTodo"/>
-        <button @click="addTodo">Add</button>
-    </div>
-    <ul class="todo-list">
-        <li v-for="todo in todos" :key="todo.id" class="todo-item">
-            <input type="checkbox" v-model="todo.completed"/>
-            <span class="todo-title">{{ todo.title }}</span>
-            <button @click="deleteTodo(todo.id)">Delete</button>
-            <button @click="completeTodo(todo.id)">Complete</button>
-        </li>
-    </ul>
-    <div class="todo-count">
-        <span>{{ getCompletedTodos }} / {{ getTotalTodos }} tasks completed</span>
-    </div>
+	<!-- Display errors -->
+	<div v-if="Object.keys(errorBag).length > 0" class="error-bag">
+		<ul>
+			<li v-for="(errors, key) in errorBag" :key="key">
+				The field {{ key }} have the following errors: {{ errors?.join(', ') }}
+			</li>
+		</ul>
+	</div>
+	<div class="add-todo">
+		<form @submit.prevent="onSubmit">
+			<input
+				ref="newTodoInput"
+				name="todo"
+				type="text"
+				:value="values.todo"
+				@input="onInput"
+				placeholder="Add a new to-do"
+			/>
+			<button type="submit">Add</button>
+		</form>
+	</div>
+	<ul class="todo-list">
+		<li v-for="todo in store.getters.pendingTodos" :key="todo.id" class="todo-item">
+			<input type="checkbox" v-model="todo.completed" />
+			<span class="todo-title">{{ todo.title }}</span>
+			<button @click="deleteTodo(todo.id)">Delete</button>
+			<button @click="completeTodo(todo.id)">Complete</button>
+		</li>
+	</ul>
+	<div class="todo-count">
+		<span
+			>{{ store.getters.completedTodos.length }} /
+			{{ store.state.todos.filter((t) => !t.deleted).length }} tasks completed</span
+		>
+	</div>
 </template>
 
 <script lang="ts" setup>
+import { useMainStore } from '@/stores/main.store';
+import { useForm } from 'vee-validate';
+import { string } from 'yup';
+import { Todo } from '@/types/todo';
 
+interface AddTodoForm {
+	todo: Todo['title'];
+}
 
-import { ref, reactive, computed } from 'vue';
-
-const newTodo = ref('');
-const todos = ref<Todo[]>([]);
-const todosCompleted = reactive({
-    count: 0
+const store = useMainStore();
+const newTodoInput = ref<HTMLInputElement | null>(null);
+const { handleSubmit, values, errorBag, setFieldValue, defineInputBinds } = useForm<AddTodoForm>({
+	validateOnMount: false,
+	validationSchema: {
+		todo: string().required().min(3),
+	},
 });
 
-const addTodo = () => {
-    if (newTodo.value.trim() === '') {
-        return;
-    }
+defineInputBinds('todo');
 
-    todos.value.push({
-        id: Date.now(),
-        title: newTodo.value,
-        completed: false,
-    });
+const onSubmit = handleSubmit(
+	(values) => {
+		const id = Math.floor(Math.random() * 1000);
+		store.actions.addTodo({
+			id,
+			title: values.todo,
+		});
+		setFieldValue('todo', '', { force: true });
+		newTodoInput.value?.focus();
+	},
+	() => {
+		newTodoInput.value?.focus();
+	}
+);
 
-    newTodo.value = '';
+const onInput = (event: Event) => {
+	const value = (event.target as HTMLInputElement).value.toString();
+
+	setFieldValue('todo', value);
 };
 
 const deleteTodo = (id: number) => {
-    const index = todos.value.findIndex((todo) => todo.id === id);
-    if (index !== -1) {
-        todos.value.splice(index, 1);
-    }
+	store.actions.markAsDeleted(id);
 };
 
 const completeTodo = (id: number) => {
-    const index = todos.value.findIndex((todo) => todo.id === id);
-    todos.value[index].completed = true;
-    todosCompleted.count++
+	store.actions.markAsCompleted(id);
 };
-
-const getCompletedTodos = computed(() => {
-    return todos.value.filter((todo) => todo.completed).length;
-});
-
-const getTotalTodos = computed(() => {
-    return todos.value.length;
-});
-
-// Export an arrow function that returns the component's reactive properties and methods
-
-
 </script>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-
-
-
-interface Todo {
-    id: number;
-    title: string;
-    completed: boolean;
-}
-
 export default defineComponent({
-    name: 'TodoList',
-    // Add any additional component options here
+	name: 'TodoList',
 });
 </script>
 
 <style>
-
-
-
-
 .add-todo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
 }
 
 .todo-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
 }
 
 .todo-item:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .todo-title {
-    flex-grow: 1;
-    margin-right: 10px;
+	flex-grow: 1;
+	margin-right: 10px;
 }
 
 button {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #2ecc71;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	background-color: #2ecc71;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #27ae60;
+	background-color: #27ae60;
 }
 
 .todo-count {
-    text-align: center;
-    margin-top: 20px;
+	text-align: center;
+	margin-top: 20px;
 }
 </style>

@@ -1,13 +1,8 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const message = ref('Hello World from App.vue!');
-</script>
+<script setup lang="ts"></script>
 <template>
 	<div class="todo-app">
 		<NuxtLayout />
 		<div id="page-content">
-			{{ message }}
 			<nuxt-page />
 		</div>
 	</div>

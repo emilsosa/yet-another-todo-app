@@ -13,9 +13,6 @@
             <li>
                 <h4> <nuxt-link to="/deleted">Deleted</nuxt-link></h4>
             </li>
-            <li>
-                <h4> <nuxt-link to="/Scheduled">Scheduled</nuxt-link></h4>
-            </li>
         </ul>
     </nav>
 </template>
