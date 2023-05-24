@@ -1,10 +1,22 @@
 <template>
-
+    <div>
+        <h4><p>lista de tareas eliminadas</p></h4>
+        <ul class="todo-list">
+            <li v-for="todo in store.getters.deletedTodos" :key="todo.id" class="todo-item">
+                <span class="todo-title">{{ todo.title }}</span>
+                <button @click="undoStatusTodo(todo.id)">Undo</button>
+            </li>
+        </ul>
+    </div>
 </template>
 
-<script>
-export default {
-    name: "deleted"
+<script lang="ts" setup>
+import { useMainStore } from '@/stores/main.store';
+const store = useMainStore();
+
+const undoStatusTodo = (id: number) => {
+    store.actions.markAsUndone(id);
+    //add es-en
 }
 </script>
 

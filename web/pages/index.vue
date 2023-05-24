@@ -82,6 +82,7 @@ const deleteTodo = (id: number) => {
 	store.actions.markAsDeleted(id);
 };
 
+
 const completeTodo = (id: number) => {
 	store.actions.markAsCompleted(id);
 };
@@ -91,7 +92,7 @@ const completeTodo = (id: number) => {
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'TodoList',
+	name: 'index',
 });
 </script>
 

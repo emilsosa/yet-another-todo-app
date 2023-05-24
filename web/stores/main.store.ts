@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
-import { Todo } from '@/types/todo';
+import { reactive, computed } from 'vue';
+import {Todo} from "../types/todo";
 
 interface State {
 	todos: Todo[];
@@ -39,6 +39,10 @@ export const useMainStore = defineStore('main', () => {
 			const index = state.todos.findIndex((todo) => todo.id === id);
 			state.todos[index].deleted = true;
 		},
+		markAsUndone(id: Todo['id']) {
+			const index = state.todos.findIndex((todo) => todo.id ===id);
+			state.todos[index].deleted = false;
+		}
 	};
 
 	return {
