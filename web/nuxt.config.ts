@@ -4,5 +4,8 @@ export default defineNuxtConfig({
     modules: [
         '@pinia/nuxt',
         '@nuxt/devtools',
+    ],
+    plugins: [
+        '@nuxtjs/composition-api'
     ]
 })

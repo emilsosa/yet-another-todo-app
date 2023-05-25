@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h4><p>lista de tareas completadas</p></h4>
+		<h4><p>List of completed tasks</p></h4>
 		<ul class="todo-list">
 			<li v-for="todo in store.getters.completedTodos" :key="todo.id" class="todo-item">
 				<span class="todo-title">{{ todo.title }}</span>

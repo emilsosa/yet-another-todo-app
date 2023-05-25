@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4><p>lista de tareas eliminadas</p></h4>
+        <h4><p>List of deleted tasks</p></h4>
         <ul class="todo-list">
             <li v-for="todo in store.getters.deletedTodos" :key="todo.id" class="todo-item">
                 <span class="todo-title">{{ todo.title }}</span>
