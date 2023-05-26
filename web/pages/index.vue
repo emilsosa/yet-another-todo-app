@@ -17,8 +17,11 @@
 				@input="onInput"
 				placeholder="Add a new to-do"
 			/>
+      <div class="containerAddButton">
 			<button type="submit">Add</button>
+      </div>
 		</form>
+
 	</div>
 	<ul class="todo-list">
 		<li v-for="todo in store.getters.pendingTodos" :key="todo.id" class="todo-item">
@@ -98,35 +101,37 @@ export default defineComponent({
 
 <style>
 .add-todo {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  /* Additional styles for visual effects */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
+.containerAddButton {
+  display: flex;
+  justify-content: center;
+}
+
+/* Alternative method to center the button horizontally */
+.containerAddButton {
+  text-align: center;
+}
+
+/* Style for the button when hovered */
 
 .todo-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-
-.todo-item {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
-}
-
-.todo-item:last-child {
-	border-bottom: none;
-}
-
 .todo-title {
 	flex-grow: 1;
 	margin-right: 10px;
 }
-
 button {
 	padding: 10px;
 	border-radius: 5px;
@@ -136,13 +141,45 @@ button {
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 }
-
 button:hover {
-	background-color: #27ae60;
+	background-color: #2980b9;
 }
 
 .todo-count {
 	text-align: center;
 	margin-top: 20px;
 }
+
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  width: 200%;
+}
+
+/* Style for all input fields when focused */
+input:focus {
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for all input fields' placeholder text */
+input::placeholder {
+  color: #999;
+}
+
+/* Style for all input fields when disabled */
+input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Style for all input fields when there is an error */
+input.error {
+  border-color: #e53935;
+}
+
 </style>
