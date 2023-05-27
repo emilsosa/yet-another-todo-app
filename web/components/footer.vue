@@ -1,15 +1,13 @@
 <template>
-    <div>
-
-    </div>
+	<q-footer bordered class="bg-grey-8 text-white">
+		<q-toolbar>
+			<q-toolbar-title>
+				<div>Footer</div>
+			</q-toolbar-title>
+		</q-toolbar>
+	</q-footer>
 </template>
 
-<script>
-export default {
-    components: true
-}
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

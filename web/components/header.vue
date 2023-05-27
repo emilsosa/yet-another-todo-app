@@ -1,64 +1,22 @@
 <template>
-    <nav>
-        <ul>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<q-header reveal elevated class="bg-primary text-white" height-hint="98">
+		<q-toolbar>
+			<q-toolbar-title>
+				<q-avatar>
+					<img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+				</q-avatar>
+				To-do App
+			</q-toolbar-title>
+		</q-toolbar>
 
-            <li class="tittle"><h1>Vue 3 To-Do App</h1></li>
-            <li>
-               <h4> <nuxt-link to="/">Index Page</nuxt-link></h4>
-            </li>
-            <li>
-               <h4> <nuxt-link to="/completed">Completed</nuxt-link></h4>
-            </li>
-            <li>
-                <h4> <nuxt-link to="/deleted">Deleted</nuxt-link></h4>
-            </li>
-        </ul>
-    </nav>
+		<q-tabs align="left">
+			<q-route-tab to="/" label="Homepage" />
+			<q-route-tab to="/completed" label="Completed" />
+			<q-route-tab to="/deleted" label="Deleted" />
+		</q-tabs>
+	</q-header>
 </template>
 
-<script>
-export default {
-    components: true
-}
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped>
-
-nav {
-    background-color: #f2f2f2;
-    padding: 20px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #333;
-
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-}
-
-.tittle {
-    padding-right: 1100px;
-}
-nav ul li {
-    display: inline-block;
-
-}
-
-nav ul li a {
-    display: block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #333;
-}
-
-nav ul li a:hover {
-    background-color: #ddd;
-}
-</style>
+<style scoped></style>
