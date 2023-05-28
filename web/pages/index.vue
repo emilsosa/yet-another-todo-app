@@ -28,14 +28,10 @@
 			</q-input>
 		</q-form>
 	</div>
-	<ul class="todo-list">
-		<li v-for="todo in store.getters.pendingTodos" :key="todo.id" class="todo-item">
-			<input type="checkbox" v-model="todo.completed" />
-			<span class="todo-title">{{ todo.title }}</span>
-			<button @click="deleteTodo(todo.id)">Delete</button>
-			<button @click="completeTodo(todo.id)">Complete</button>
-		</li>
-	</ul>
+	<h5>Pending</h5>
+	<todo-list :todos="store.getters.pendingTodos" @complete-todo="completeTodo" @delete-todo="deleteTodo" />
+	<h5>Completed</h5>
+	<todo-list :todos="store.getters.completedTodos" @complete-todo="completeTodo" @delete-todo="deleteTodo" />
 	<div class="todo-count">
 		<span
 			>{{ store.getters.completedTodos.length }} /
@@ -57,12 +53,13 @@ interface AddTodoForm {
 const store = useMainStore();
 const newTodoInput = ref<HTMLInputElement | null>(null);
 
-const { handleSubmit, submitCount, values, errorBag, errors, setFieldValue, defineInputBinds } = useForm<AddTodoForm>({
-	validateOnMount: false,
-	validationSchema: {
-		todo: string().required().min(3),
-	},
-});
+const { handleSubmit, submitCount, values, errorBag, errors, setFieldValue, defineInputBinds } =
+	useForm<AddTodoForm>({
+		validateOnMount: false,
+		validationSchema: {
+			todo: string().required().min(3),
+		},
+	});
 defineInputBinds('todo');
 
 const onSubmit = handleSubmit(
@@ -85,12 +82,12 @@ const onInput = (value: string) => {
 	setFieldValue('todo', value);
 };
 
-const deleteTodo = (id: number) => {
-	store.actions.markAsDeleted(id);
+const deleteTodo = (payload: { id: number }) => {
+	store.actions.markAsDeleted(payload.id);
 };
 
-const completeTodo = (id: number) => {
-	store.actions.markAsCompleted(id);
+const completeTodo = (payload: { id: number }) => {
+	store.actions.markAsCompleted(payload.id);
 };
 </script>
 
