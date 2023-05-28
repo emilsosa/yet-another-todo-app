@@ -3,7 +3,11 @@ export default defineNuxtConfig({
 	ssr: false,
 	modules: ['@pinia/nuxt', '@nuxt/devtools', 'nuxt-quasar-ui'],
 	quasar: {
-        iconSet: 'fontawesome-v6',
+		config: {
+			notify: {},
+		},
+		iconSet: 'fontawesome-v6',
+		plugins: ['Notify'],
 		extras: {
 			fontIcons: ['fontawesome-v6'],
 		},

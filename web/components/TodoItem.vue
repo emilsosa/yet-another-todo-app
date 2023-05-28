@@ -2,13 +2,12 @@
 	<li :class="{ complete: todo.completed }">
 		<q-checkbox :model-value="todo.completed" @click="emits('complete', { id: todo.id })" />
 		<span class="todo-title">{{ todo.title }}</span>
-		<q-btn color="primary" @click="emits('delete', { id: todo.id })">Delete</q-btn>
-		<q-btn color="red" @click="emits('complete', { id: todo.id })">Complete</q-btn>
+		<q-btn dense flat round color="primary" @click="emits('delete', { id: todo.id })" icon="fa fa-solid fa-trash"></q-btn>
 	</li>
 </template>
 
 <script setup lang="ts">
-import { Todo } from '../types/todo';
+import { Todo } from '@/types/todo';
 
 interface Emits {
 	(e: 'delete', payload: { id: number }): void;

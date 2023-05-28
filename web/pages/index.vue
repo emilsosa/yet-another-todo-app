@@ -45,6 +45,7 @@ import { useMainStore } from '@/stores/main.store';
 import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { Todo } from '@/types/todo';
+import { useQuasar } from 'quasar';
 
 interface AddTodoForm {
 	todo: Todo['title'];
@@ -52,26 +53,38 @@ interface AddTodoForm {
 
 const store = useMainStore();
 const newTodoInput = ref<HTMLInputElement | null>(null);
+const $q = useQuasar();
 
-const { handleSubmit, submitCount, values, errorBag, errors, setFieldValue, defineInputBinds } =
-	useForm<AddTodoForm>({
-		validateOnMount: false,
-		validationSchema: {
-			todo: string().required().min(3),
-		},
-	});
+const { handleSubmit, values, errorBag, errors, setFieldValue, defineInputBinds } = useForm<AddTodoForm>({
+	validateOnMount: false,
+	validationSchema: {
+		todo: string().required().min(3),
+	},
+});
 defineInputBinds('todo');
 
 const onSubmit = handleSubmit(
 	(values) => {
-		debugger;
 		const id = Math.floor(Math.random() * 1000);
 		store.actions.addTodo({
 			id,
 			title: values.todo,
 		});
-		setFieldValue('todo', '', { force: true });
+		setFieldValue('todo', '');
 		newTodoInput.value?.focus();
+		$q.notify({
+			message: 'Todo added!',
+			type: 'positive',
+			actions: [
+				{
+					label: 'Undo',
+					color: 'white',
+					handler: () => {
+						console.log('Undo');
+					},
+				},
+			],
+		});
 	},
 	() => {
 		newTodoInput.value?.focus();
