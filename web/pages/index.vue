@@ -34,8 +34,8 @@
 	<todo-list :todos="store.getters.completedTodos" @complete-todo="completeTodo" @delete-todo="deleteTodo" />
 	<div class="todo-count">
 		<span
-			>{{ store.getters.completedTodos.length }} /
-			{{ store.state.todos.filter((t) => !t.deleted).length }} tasks completed</span
+			>{{ store.getters.completedTodos.length }}  all time completed tasks  /
+			{{ store.state.todos.filter((t) => !t.deleted).length }} completed tasks now</span
 		>
 	</div>
 </template>
@@ -97,6 +97,7 @@ const onInput = (value: string) => {
 
 const deleteTodo = (payload: { id: number }) => {
 	store.actions.markAsDeleted(payload.id);
+
 };
 
 const completeTodo = (payload: { id: number }) => {

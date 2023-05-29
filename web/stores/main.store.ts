@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', () => {
 
 	const actions = {
 		addTodo(todo: { id: Todo['id']; title: Todo['title']; description?: Todo['description'] }) {
-			state.todos.push({ ...todo, completed: false, deleted: false });
+			state.todos.push({ ...todo, completed: false, deleted: false, hidden: false});
 		},
 		removeTodo(id: Todo['id']) {
 			const index = state.todos.findIndex((todo) => todo.id === id);
@@ -43,6 +43,7 @@ export const useMainStore = defineStore('main', () => {
 			const index = state.todos.findIndex((todo) => todo.id === id);
 			state.todos[index].deleted = false;
 		},
+
 	};
 
 	return {

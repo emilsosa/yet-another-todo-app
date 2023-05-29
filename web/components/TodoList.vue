@@ -7,6 +7,7 @@
 			class="todo-item"
 			@delete="emits('delete-todo', { id: $event.id })"
 			@complete="emits('complete-todo', { id: $event.id })"
+
 		>
 		</TodoItem>
 	</ul>
@@ -25,8 +26,8 @@ interface Events {
 }
 
 const { todos } = defineProps<Props>();
-
 const emits = defineEmits<Events>();
+
 </script>
 
 <style scoped></style>
