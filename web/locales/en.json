@@ -1,4 +1,8 @@
 {
-  "hello": "hello",
-  "welcome": ""
+  "tasks completed": "tareas completadas",
+  "Index Page": "Pagina de inicio",
+  "Completed": "Completado",
+  "Deleted": "Eliminado",
+  "List of completed tasks": "Lista de tareas completadas",
+  "List of deleted tasks": "Lista de tareas eliminadas"
 }
