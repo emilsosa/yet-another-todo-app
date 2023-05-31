@@ -19,7 +19,8 @@ const addTodo = () => {
 	store.actions.addTodo({
 		id: randomNumber,
 		title: `New Todo Title ${randomNumber}`,
-		description: `New Todo Description ${randomNumber}`,
+
+
 	})
 };
 const removeLastTodo = () => {

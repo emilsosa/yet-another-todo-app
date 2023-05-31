@@ -46,7 +46,7 @@ import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { Todo } from '@/types/todo';
 import { useQuasar } from 'quasar';
-
+import cron from 'node-cron';
 interface AddTodoForm {
 	todo: Todo['title'];
 }
@@ -103,6 +103,30 @@ const deleteTodo = (payload: { id: number }) => {
 const completeTodo = (payload: { id: number }) => {
 	store.actions.markAsCompleted(payload.id);
 };
-</script>
 
+
+</script>
+<script lang="ts">
+import { onMounted, onBeforeUnmount } from 'vue';
+import cron, { ScheduledTask } from 'node-cron';
+export default {
+  // ...
+
+  setup() {
+    onMounted(() => {
+      const scheduledTask: ScheduledTask = cron.schedule('0 10 * * *', () => {
+        // Your task logic goes here
+        console.log('Scheduled task is running...');
+      });
+      onBeforeUnmount(() => {
+        if (scheduledTask) {
+          scheduledTask.stop();
+        }
+      });
+    });
+  },
+
+  // ...
+};
+</script>
 <style></style>
