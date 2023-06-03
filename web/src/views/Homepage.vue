@@ -34,7 +34,7 @@
 	<todo-list :todos="store.getters.completedTodos" @complete-todo="completeTodo" @delete-todo="deleteTodo" />
 	<div class="todo-count">
 		<span
-			>{{ store.getters.completedTodos.length }}  all time completed tasks  /
+			>{{ store.getters.completedTodos.length }} all time completed tasks /
 			{{ store.state.todos.filter((t) => !t.deleted).length }} completed tasks now</span
 		>
 	</div>
@@ -45,7 +45,7 @@ import { useMainStore } from '@/stores/main.store';
 import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { Todo } from '@/types/todo';
-import { useQuasar } from 'quasar';
+import { ref } from 'vue';
 
 interface AddTodoForm {
 	todo: Todo['title'];
@@ -53,7 +53,6 @@ interface AddTodoForm {
 
 const store = useMainStore();
 const newTodoInput = ref<HTMLInputElement | null>(null);
-const $q = useQuasar();
 
 const { handleSubmit, values, errorBag, errors, setFieldValue, defineInputBinds } = useForm<AddTodoForm>({
 	validateOnMount: false,
@@ -97,7 +96,6 @@ const onInput = (value: string) => {
 
 const deleteTodo = (payload: { id: number }) => {
 	store.actions.markAsDeleted(payload.id);
-
 };
 
 const completeTodo = (payload: { id: number }) => {
