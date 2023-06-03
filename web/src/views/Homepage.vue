@@ -1,32 +1,30 @@
 <template>
 	<!-- Display errors -->
-	<div v-if="Object.keys(errorBag).length > 0" class="error-bag">
-		<ul>
-			<li v-for="(errors, key) in errorBag" :key="key">
-				The field {{ key }} have the following errors: {{ errors?.join(', ') }}
-			</li>
-		</ul>
-	</div>
-	<div class="add-todo">
-		<q-form @submit.prevent="onSubmit">
-			<q-input
-				autofocus
-				outlined
-				:model-value="values.todo"
-				:error="(errorBag.todo?.length || 0) > 0"
-				:error-message="errors.todo"
-				type="text"
-				label="Add a new to-do"
-				placeholder="Remember me to..."
-				@update:model-value="onInput"
-			>
-				<template v-slot:append>
-					<q-btn type="submit" round dense flat @click="onSubmit">
-						<q-icon name="fa-solid fa-paper-plane" />
-					</q-btn>
-				</template>
-			</q-input>
-		</q-form>
+	<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+		<div class="text-700 text-center">
+			<div v-if="Object.keys(errorBag).length > 0" class="error-bag">
+				<ul>
+					<li v-for="(errors, key) in errorBag" :key="key">
+						The field {{ key }} have the following errors: {{ errors?.join(', ') }}
+					</li>
+				</ul>
+			</div>
+			<form id="add-new-todo-form" @submit.prevent="onSubmit">
+				<InputText
+					autofocus
+					outlined
+					:model-value="values.todo"
+					:error="(errorBag.todo?.length || 0) > 0"
+					:error-message="errors.todo"
+					type="text"
+					label="Add a new to-do"
+					placeholder="Remember me to..."
+					@update:model-value="onInput"
+				>
+				</InputText>
+				<font-awesome-icon name="fa-solid fa-paper-plane"></font-awesome-icon>
+			</form>
+		</div>
 	</div>
 	<h5>Pending</h5>
 	<todo-list :todos="store.getters.pendingTodos" @complete-todo="completeTodo" @delete-todo="deleteTodo" />
@@ -46,6 +44,7 @@ import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { Todo } from '@/types/todo';
 import { ref } from 'vue';
+import InputText from 'primevue/inputtext';
 
 interface AddTodoForm {
 	todo: Todo['title'];
@@ -71,19 +70,6 @@ const onSubmit = handleSubmit(
 		});
 		setFieldValue('todo', '');
 		newTodoInput.value?.focus();
-		$q.notify({
-			message: 'Todo added!',
-			type: 'positive',
-			actions: [
-				{
-					label: 'Undo',
-					color: 'white',
-					handler: () => {
-						console.log('Undo');
-					},
-				},
-			],
-		});
 	},
 	() => {
 		newTodoInput.value?.focus();
