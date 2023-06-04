@@ -22,7 +22,7 @@
 					@update:model-value="onInput"
 				>
 				</InputText>
-				<font-awesome-icon name="fa-solid fa-paper-plane"></font-awesome-icon>
+				<font-awesome-icon icon="fa-solid fa-paper-plane"></font-awesome-icon>
 			</form>
 		</div>
 	</div>
