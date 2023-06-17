@@ -1,13 +1,11 @@
+<script setup lang="ts">
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+</script>
 <template>
-	<div class="q-pa-md">
-		<q-layout view="hHh lpr fFf">
-      <Header></Header>
-
-			<q-page-container>
-        <NuxtPage></NuxtPage>
-			</q-page-container>
-
-      <Footer></Footer>
-		</q-layout>
+	<div>
+		<header></header>
+		<slot></slot>
+		<footer></footer>
 	</div>
 </template>

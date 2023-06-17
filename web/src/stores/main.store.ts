@@ -35,6 +35,10 @@ export const useMainStore = defineStore('main', () => {
 			const index = state.todos.findIndex((todo) => todo.id === id);
 			state.todos[index].completed = true;
 		},
+		markAsNotCompleted(id: Todo['id']) {
+			const index = state.todos.findIndex((todo) => todo.id === id);
+			state.todos[index].completed = false;
+		},
 		markAsDeleted(id: Todo['id']) {
 			const index = state.todos.findIndex((todo) => todo.id === id);
 			state.todos[index].deleted = true;
