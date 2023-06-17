@@ -1,5 +1,5 @@
 import 'vue-router';
-import Messages from "@/i18n/locales/en.json";
+import Messages from "@/i18n/locales/en-US.json";
 
 declare module 'vue-router' {
 	interface RouteMeta {
