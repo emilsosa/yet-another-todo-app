@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { Todo } from '@/types/todo';
+import { Todo } from '@/@types/global';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
 

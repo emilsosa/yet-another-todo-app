@@ -5,4 +5,10 @@ export interface Todo {
 	completed: boolean;
 	deleted: boolean;
 	archived: boolean;
+	tags: TodoTag[];
+}
+
+export interface TodoTag {
+	id: number;
+	name: string;
 }

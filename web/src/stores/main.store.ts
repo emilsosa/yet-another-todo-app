@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive, computed } from 'vue';
-import { Todo } from '../types/todo';
+import { Todo } from '../@types/global';
 
 interface State {
 	todos: Todo[];

@@ -29,7 +29,7 @@ import InputText from 'primevue/inputtext';
 import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { ref } from 'vue';
-import { Todo } from '@/types/todo';
+import { Todo } from '@/@types/global';
 
 interface Emits {
 	(e: 'create', payload: Pick<Todo, 'id' | 'title'>): void;
