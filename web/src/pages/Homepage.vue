@@ -1,10 +1,11 @@
 <template>
-	<!-- Display errors -->
-	<new-todo-form @create="onCreate" />
+	<ConfirmDialog></ConfirmDialog>
+	<Toast></Toast>
+	<NewTodoForm @create="onCreate" />
 	<h5>Pending</h5>
-	<todo-list :todos="pendingTodos"  @complete-todo="onCompleteTodo" @delete-todo="onDeleteTodo" />
+	<TodoList :todos="pendingTodos" @complete-todo="onCompleteTodo" @delete-todo="onDeleteTodo" />
 	<h5>Completed</h5>
-	<todo-list :todos="completedTodos" @undo-complete-todo="onUndoCompleteTodo"  @delete-todo="onDeleteTodo" />
+	<TodoList :todos="completedTodos" @undo-complete-todo="onUndoCompleteTodo" @delete-todo="onDeleteTodo" />
 	<div class="todo-count">
 		<span
 			>{{ store.getters.completedTodos.length }} all time completed tasks /
@@ -14,12 +15,18 @@
 </template>
 
 <script lang="ts" setup>
-import { useMainStore } from '@/stores/main.store';
 import TodoList from '@/components/TodoList.vue';
 import NewTodoForm from '@/components/NewTodoForm.vue';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
+import { useMainStore } from '@/stores/main.store';
 import { computed } from 'vue';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast';
 
 const store = useMainStore();
+const confirm = useConfirm();
+const toast = useToast();
 
 const pendingTodos = computed(() => store.getters.pendingTodos);
 const completedTodos = computed(() => store.getters.completedTodos);
@@ -36,7 +43,19 @@ const onUndoCompleteTodo = (payload: { id: number }) => {
 };
 
 const onDeleteTodo = (payload: { id: number }) => {
-	store.actions.markAsDeleted(payload.id);
+	confirm.require({
+		message: 'Are you sure that you want to delete this todo?',
+		header: 'Confirmation',
+		accept: () => {
+			toast.add({
+				severity: 'success',
+				summary: 'Success',
+				detail: 'Todo deleted successfully',
+				life: 3000,
+			});
+			store.actions.markAsDeleted(payload.id);
+		},
+	});
 };
 
 const onCompleteTodo = (payload: { id: number }) => {

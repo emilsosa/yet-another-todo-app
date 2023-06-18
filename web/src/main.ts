@@ -9,7 +9,9 @@ import 'primevue/resources/primevue.min.css';
 import 'primeflex/primeflex.css';
 import '@/styles/main.css';
 
-import { fontAwesomePlugin } from '@/plugins/fontawesome.plugin';
+import FontAwesomePlugin from '@/plugins/fontawesome.plugin';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
 
 import App from './App.vue';
 
@@ -20,5 +22,7 @@ app.use(PrimeVue);
 app.use(pinia);
 app.use(router);
 app.use(i18n);
-app.use(fontAwesomePlugin);
+app.use(FontAwesomePlugin);
+app.use(ConfirmationService);
+app.use(ToastService);
 app.mount('#app');
