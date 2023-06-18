@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { setPageTitle } from './hooks';
 
 export const router = createRouter({
 	history: createWebHashHistory(),
@@ -33,3 +34,5 @@ export const router = createRouter({
 		},
 	],
 });
+
+router.beforeEach(setPageTitle);

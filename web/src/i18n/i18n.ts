@@ -9,5 +9,7 @@ export const i18n = createI18n<[MessageSchema], 'en-US' | 'es-DO'>({
 	messages: {
 	  'en-US': enUS,
 	  'es-DO': esDO
-	}
+	},
+	legacy: false,
+	globalInjection: false,
  })

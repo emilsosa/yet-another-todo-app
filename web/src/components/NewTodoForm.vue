@@ -1,14 +1,7 @@
 <template>
 	<div class="surface-section px-4 py-8 md:px-6 lg:px-8">
 		<div class="text-700 text-center">
-			<div v-if="Object.keys(errorBag).length > 0" class="error-bag">
-				<ul>
-					<li v-for="(errors, key) in errorBag" :key="key">
-						The field {{ key }} have the following errors: {{ errors?.join(', ') }}
-					</li>
-				</ul>
-			</div>
-			<form id="add-new-todo-form" @submit.prevent="onSubmit">
+			<form id="add-new-todo-form" class="flex flex-column gap-2" @submit.prevent="onSubmit">
 				<InputText
 					autofocus
 					outlined
@@ -16,9 +9,11 @@
 					type="text"
 					label="Add a new to-do"
 					placeholder="Remember me to..."
+					:class="{ 'p-invalid': errorBag.title }"
 					@update:model-value="onInput"
 				>
 				</InputText>
+				<small v-if="errors.title" class="p-error">{{ errors.title }}</small>
 			</form>
 		</div>
 	</div>
@@ -26,6 +21,7 @@
 
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
+import Calendar from 'primevue/calendar';
 import { useForm } from 'vee-validate';
 import { string } from 'yup';
 import { ref } from 'vue';
@@ -66,4 +62,8 @@ const onInput = (value: string) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.p-error {
+	text-transform: capitalize;
+}
+</style>
