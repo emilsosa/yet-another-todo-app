@@ -1,5 +1,8 @@
 {
 	"pageTitles": {
-		"homepage": "Home"
+		"homepage": "Home",
+		"archived": "Archived",
+		"completed": "Completed",
+		"settings": "Settings"
 	}
 }

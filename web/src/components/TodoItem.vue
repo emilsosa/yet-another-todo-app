@@ -1,11 +1,23 @@
 <template>
-	<li :class="{ complete: todo.completed }" v-bind="$attrs">
-		<Checkbox :model-value="todo.completed" :value="todo.id" binary @click="onClick" />
-		<span class="todo-title">{{ todo.title }}</span>
-		<Button @click="deleteTodo" size="small">
-			<font-awesome-icon icon="fa fa-trash"></font-awesome-icon>Delete
-		</Button>
-	</li>
+	<div class="col-12">
+		<div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+			<div
+				class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+			>
+				<Checkbox :model-value="todo.completed" :value="todo.id" binary @click="onClick" />
+				<div class="flex flex-column align-items-center sm:align-items-start gap-3">
+					<div :class="{ complete: todo.completed }" class="text-2xl font-bold text-900">
+						{{ todo.title }}
+					</div>
+					<div class="text-2xl font-bold text-900">{{ todo.description }}</div>
+				</div>
+
+				<Button @click="onDelete" size="small">
+					<font-awesome-icon icon="fa fa-trash"></font-awesome-icon>Delete
+				</Button>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -32,7 +44,7 @@ const onClick = () => {
 		emits('complete', { id: todo.id });
 	}
 };
-const deleteTodo = () => {
+const onDelete = () => {
 	emits('delete', { id: todo.id });
 };
 </script>
@@ -40,8 +52,5 @@ const deleteTodo = () => {
 <style scoped>
 .complete {
 	text-decoration: line-through;
-}
-.hidden {
-	display: none;
 }
 </style>

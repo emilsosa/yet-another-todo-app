@@ -15,21 +15,17 @@ export const useMainStore = defineStore('main', () => {
 		completedTodos: computed(() => {
 			return state.todos.filter((todo) => todo.completed);
 		}),
-		deletedTodos: computed(() => {
-			return state.todos.filter((todo) => todo.deleted);
+		archivedTodos: computed(() => {
+			return state.todos.filter((todo) => todo.archived);
 		}),
 		pendingTodos: computed(() => {
-			return state.todos.filter((todo) => !todo.completed && !todo.deleted);
+			return state.todos.filter((todo) => !todo.completed && !todo.archived);
 		}),
 	};
 
 	const actions = {
 		addTodo(todo: { id: Todo['id']; title: Todo['title']; description?: Todo['description'] }) {
-			state.todos.push({ ...todo, completed: false, deleted: false });
-		},
-		removeTodo(id: Todo['id']) {
-			const index = state.todos.findIndex((todo) => todo.id === id);
-			state.todos.splice(index, 1);
+			state.todos.unshift({ ...todo, completed: false, archived: false, tags: [] });
 		},
 		markAsCompleted(id: Todo['id']) {
 			const index = state.todos.findIndex((todo) => todo.id === id);
@@ -39,15 +35,11 @@ export const useMainStore = defineStore('main', () => {
 			const index = state.todos.findIndex((todo) => todo.id === id);
 			state.todos[index].completed = false;
 		},
-		markAsDeleted(id: Todo['id']) {
+		deleteTodo(id: Todo['id']) {
 			const index = state.todos.findIndex((todo) => todo.id === id);
-			state.todos[index].deleted = true;
-		},
-		markAsUndone(id: Todo['id']) {
-			const index = state.todos.findIndex((todo) => todo.id === id);
-			state.todos[index].deleted = false;
-		},
 
+			state.todos.splice(index, 1);
+		},
 	};
 
 	return {

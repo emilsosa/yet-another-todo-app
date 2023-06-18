@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h4><p>lista de tareas eliminadas</p></h4>
+        <h4><p>lista de tareas archivadas</p></h4>
         <ul class="todo-list">
-            <li v-for="todo in store.getters.deletedTodos" :key="todo.id" class="todo-item">
+            <li v-for="todo in store.getters.archivedTodos" :key="todo.id" class="todo-item">
                 <span class="todo-title">{{ todo.title }}</span>
                 <button @click="undoStatusTodo(todo.id)">Undo</button>
             </li>

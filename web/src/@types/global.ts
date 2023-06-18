@@ -3,7 +3,6 @@ export interface Todo {
 	title: string;
 	description?: string;
 	completed: boolean;
-	deleted: boolean;
 	archived: boolean;
 	tags: TodoTag[];
 }

@@ -2,16 +2,7 @@
 	<ConfirmDialog></ConfirmDialog>
 	<Toast></Toast>
 	<NewTodoForm @create="onCreate" />
-	<h5>Pending</h5>
 	<TodoList :todos="pendingTodos" @complete-todo="onCompleteTodo" @delete-todo="onDeleteTodo" />
-	<h5>Completed</h5>
-	<TodoList :todos="completedTodos" @undo-complete-todo="onUndoCompleteTodo" @delete-todo="onDeleteTodo" />
-	<div class="todo-count">
-		<span
-			>{{ store.getters.completedTodos.length }} all time completed tasks /
-			{{ store.state.todos.filter((t) => !t.deleted).length }} completed tasks now</span
-		>
-	</div>
 </template>
 
 <script lang="ts" setup>
@@ -46,6 +37,7 @@ const onDeleteTodo = (payload: { id: number }) => {
 	confirm.require({
 		message: 'Are you sure that you want to delete this todo?',
 		header: 'Confirmation',
+		defaultFocus: 'reject',
 		accept: () => {
 			toast.add({
 				severity: 'success',
@@ -53,7 +45,7 @@ const onDeleteTodo = (payload: { id: number }) => {
 				detail: 'Todo deleted successfully',
 				life: 3000,
 			});
-			store.actions.markAsDeleted(payload.id);
+			store.actions.deleteTodo(payload.id);
 		},
 	});
 };
